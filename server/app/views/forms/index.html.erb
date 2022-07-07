@@ -1,0 +1,12 @@
+<h1>Forms#index</h1>
+<p>Find me in app/views/forms/index.html.erb</p>
+
+<form action="/users/1212/create_user" id="submit_new_user" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+    <input type="text" name="first_name" placeholder="First Name"/>
+    <input type="text" name="last_name" placeholder="Last Name"/>
+    <input type="text" name="email" placeholder="Email" />
+    <input type="text" name="password" placeholder="Password" />
+    <input type="text" name="confirm_password" placeholder="Confirm Password" />
+    <input type="submit" value="Create" />
+</form>
