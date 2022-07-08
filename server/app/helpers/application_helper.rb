@@ -24,4 +24,12 @@ module ApplicationHelper
     def encrypt_password(password)
         return Digest::MD5.hexdigest("password#{password}secured")
     end
+
+    def encrypt(text)
+        return Base64.urlsafe_encode64(text.to_s)
+    end
+
+    def decrypt(text)
+        return Base64.urlsafe_decode64(text)
+    end
 end

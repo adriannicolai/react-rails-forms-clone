@@ -1,0 +1,10 @@
+<% if user.present? %>
+<div class="user_details" data-user_id="<%= encrypt(user["id"]) %>">
+    <input type="hidden" name="user_id" class="user_id" value="<%= encrypt(user["id"]) %>" />
+    <input type="text" name="first_name" class="first_name" value="<%= user["first_name"] %>" />
+    <input type="text" name="last_name" class="last_name" value="<%= user["last_name"] %>" />
+    <input type="text" name="email" class="email" value="<%= user["email"] %>" />
+    <button type="submit" name="update_user" value="Update" class="update_user"> Update </button>
+    <button type="submit" name="delete_user" value="Delete" class="delete_user"> Delete </button>
+</div>
+<% end %>

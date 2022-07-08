@@ -10,3 +10,23 @@
     <input type="text" name="confirm_password" placeholder="Confirm Password" />
     <input type="submit" value="Create" />
 </form>
+<div>
+    <ul id="user_list">
+        <% if @users[:status] %>
+            <% @users[:result].each do |user| %>
+                <%= render :partial => "/forms/templates/user_list_partial", :locals => {:user => user} %>
+            <% end %>
+        <% end %>
+    </ul>
+</div>
+
+<form method="post" action="/users/:api_key/update_user" id="update_user_form">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+    <input type="hidden" name="user_id" class="user_id" />
+    <input type="text" name="first_name" class="first_name" />
+    <input type="text" name="last_name" class="last_name" />
+    <input type="text" name="email" class="email" />
+</form>
+<form method="post" action="/users/:api_key/update_user" id="delete_user_form">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+</form>
