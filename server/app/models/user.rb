@@ -42,11 +42,11 @@ class User < ApplicationRecord
 
     def self.get_user(params)
         response_data = {:status => false, :result => {}, :error => nil}
-        
+
         begin
             # Set the variables needed for fetching the user
             params[:fields_to_select] ||= "*"
-            get_user_query = ["SELECT #{ActiveRecord::Base.sanitize_sql_array(params[:fields_to_select])}
+            get_user_query = ["SELECT #{ActiveRecord::Base.sanitize_sql(params[:fields_to_select])}
             FROM users WHERE"]
 
             # Add the fields to filter to the query
@@ -64,6 +64,21 @@ class User < ApplicationRecord
                 response_data[:error] = "User not found"
             end
 
+        rescue Exception => ex
+            response_data[:error] = ex.message
+        end
+
+        return response_data
+    end
+
+    def get_users(params)
+        response_data = {:status => false, :result => {}, :error => nil}
+        params[:fields_to_select] ||= "*"
+
+        begin
+            select_user_query = query_records(["
+                SELECT #{ActiveRecord::Base.sanitize_sql()}
+            "])
         rescue Exception => ex
             response_data[:error] = ex.message
         end
