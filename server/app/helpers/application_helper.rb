@@ -7,7 +7,7 @@ module ApplicationHelper
             # Check for required fields
             required_fields.each do |required_field|
                 if params[required_field].present?
-                    response_data[:result][required_field] = params[required_field]
+                    response_data[:result][required_field] = params[required_field].is_a?(String) ? params[required_field].strip : params[required_field]
                 else
                     incomplete_fields << required_field
                 end
