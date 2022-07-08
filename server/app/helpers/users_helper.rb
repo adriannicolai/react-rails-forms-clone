@@ -15,6 +15,10 @@ module UsersHelper
                     response_data[:result]["email"] = "Email Address is already in use" if User.get_user({:fields_to_filter => {:email => value}, :fields_to_select => "email"})[:status]
                 end
 
+                if key === "password"
+                    response_data[:result]["password"] = "Passwords do not match" if new_user_params["confirm_password"] != value
+                end
+
                 next if !validations[validation_key].present?
 
                 validation_result = (value =~ validations[validation_key][:regex])
