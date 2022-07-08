@@ -5,9 +5,13 @@ class UsersController < ApplicationController
     def create_new_user
         response_data = { :status => false, :result => {}, :error => nil }
 
-        User.create_user(params)
+        begin
+            create_new_user_data = User.create_user(params)
+        rescue Exception => ex
+            response_data[:error] = ex.message
+        end
 
-        render :json => response_data
+        render :json => response_data.merge!(create_new_user_data)
     end
 
     def update_user

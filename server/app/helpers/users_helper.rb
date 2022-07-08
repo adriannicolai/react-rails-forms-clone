@@ -11,17 +11,21 @@ module UsersHelper
             new_user_params.each do |key, value|
                 validation_key = (key === "first_name" || key === "last_name" ? "name" : key)
 
-                next if !validations[validation_key].present?
+                if key === "email"
+                    response_data[:result]["email"] = "Email Address is already in use" if User.get_user({:fields_to_filter => {:email => value}, :fields_to_select => "email"})[:status]
+                end
 
+                next if !validations[validation_key].present?
 
                 validation_result = (value =~ validations[validation_key][:regex])
 
-                response_data[:result][validation_key] = validations[validation_key] if !validation_result.nil?
+                response_data[:result][validation_key] = validations[validation_key][:error] if key === "name" ? !validation_result.nil? : validation_result.nil?
             end
+
+            response_data.merge!({ :status => response_data[:result].empty? })
         rescue Exception => ex
             response_data[:error] = ex.message
         end
-
 
         return response_data
     end
